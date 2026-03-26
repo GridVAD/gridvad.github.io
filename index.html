@@ -603,14 +603,14 @@
     <!-- UCSD Ped2 row -->
     <div class="clip-strip">
       <span class="clip-strip-label" style="color:var(--blue);min-width:96px;">CLIP</span>
-      <button class="clip-btn" id="btn-ucsd-1" onclick="selectClip('Videos/UCSD_Ped2/Test001_demo.mp4','CLIP· Test 001',this)">Test 001</button>
-      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/01_0141_demo.mp4','CLIP · Test 002',this)">Test 002</button>
-      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test002_demo.mp4','CLIP · Test 003',this)">Test 003</button>
-      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/10_0074_demo.mp4','CLIP · Test 004',this)">Test 004</button>
-      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test003_demo.mp4','CLIP · Test 005',this)">Test 005</button>
-      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test004_demo.mp4','CLIP · Test 006',this)">Test 006</button>
-       <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test005_demo.mp4','CLIP · Test 007',this)">Test 007</button>
-       <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test006_demo.mp4','CLIP · Test 008',this)">Test 008</button>
+      <button class="clip-btn" id="btn-ucsd-1" onclick="selectClip('Videos/UCSD_Ped2/Test001_demo.mp4','UCSD· Test 001',this)">Test 001</button>
+      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/01_0141_demo.mp4','ShanghaiTech · Test 002',this)">Test 002</button>
+      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test002_demo.mp4','UCSD · Test 003',this)">Test 003</button>
+      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/10_0074_demo.mp4','ShanghaiTech · Test 004',this)">Test 004</button>
+      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test003_demo.mp4','UCSD · Test 005',this)">Test 005</button>
+      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test004_demo.mp4','UCSD · Test 006',this)">Test 006</button>
+       <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test005_demo.mp4','UCSD · Test 007',this)">Test 007</button>
+       <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test006_demo.mp4','UCSD · Test 008',this)">Test 008</button>
     </div>
 
     <!-- ShanghaiTech row -->
@@ -801,7 +801,7 @@
   // Auto-load UCSD Test 001 on page load
   window.addEventListener('DOMContentLoaded', () => {
     const firstBtn = document.getElementById('btn-ucsd-1');
-    if (firstBtn) selectClip('Videos/UCSD_Ped2/Test001_demo.mp4', 'CLIP · Test 001', firstBtn);
+    if (firstBtn) selectClip('Videos/UCSD_Ped2/Test001_demo.mp4', 'UCSD · Test 001', firstBtn);
   });
 
   function copyBib() {
