@@ -60,8 +60,30 @@
     letter-spacing: -0.01em;
   }
   .hero h1 em { font-style: italic; color: var(--blue); }
-  .authors { font-size: 1rem; color: var(--blue); font-weight: 500; max-width: 700px; margin: 0 auto 10px; line-height: 1.9; }
-  .authors sup { font-size: 0.7em; color: var(--text-muted); }
+  /* ── UPDATED AUTHORS ── */
+.authors { 
+  font-size: 1rem; 
+  color: var(--blue); 
+  font-weight: 500; 
+  /* Increase max-width to give the names enough room to sit horizontally */
+  max-width: 1000px; 
+  margin: 0 auto 10px; 
+  line-height: 1.9; 
+  
+  /* These properties force the single-line layout */
+  display: flex;
+  flex-wrap: nowrap; 
+  justify-content: center;
+  white-space: nowrap;
+  gap: 5px; /* Adjust this to control the spacing between names */
+}
+
+.authors sup { 
+  font-size: 0.7em; 
+  color: var(--text-muted); 
+  /* Ensures superscripts don't add extra height to the flex line */
+  line-height: 0; 
+}
   .affiliations { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px; }
   .footnotes { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 32px; }
   .cta-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; position: relative; z-index: 2; }
