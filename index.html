@@ -846,6 +846,12 @@
     document.getElementById('panel-' + ds).classList.add('active');
   }
 
+  // Auto-load Test 001 on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    const firstBtn = document.querySelector('#panel-ucsd .clip-btn');
+    if (firstBtn) selectClip('ucsd', 1, firstBtn);
+  });
+
   function copyBib() {
     const text = document.getElementById('bib-text').innerText;
     navigator.clipboard.writeText(text).then(() => {
