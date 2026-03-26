@@ -466,24 +466,31 @@
   </p>
 
   <div class="pipeline-wrap">
-    <svg width="100%" viewBox="0 0 796 700" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+    <!-- viewBox height: 01(108) + gap(28) + 02(108) + gap(28) + 03(108) + gap(28) + 04a(100) + gap(28) + 04b(100) + gap(28) + output(68) + gap(18) + budget(36) + padding(28) = 814 -->
+    <svg width="100%" viewBox="0 0 796 814" xmlns="http://www.w3.org/2000/svg" style="display:block;">
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M2 1L8 5L2 9" fill="none" stroke="#a0aacb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
       </defs>
+
+      <!-- 01 — Stratified Grid Sampling (y=0) -->
       <rect x="0" y="0" width="796" height="108" rx="10" fill="#f0f3fc" stroke="#dde3f0" stroke-width="1"/>
       <rect x="0" y="0" width="5" height="108" rx="3" fill="#534AB7"/>
       <rect x="20" y="16" width="36" height="22" rx="5" fill="#1a1f3a"/>
-      <text x="38" y="31" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Mono',monospace" font-size="11" font-weight="600">01</text>
+      <text x="38" y="27" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Mono',monospace" font-size="11" font-weight="600">01</text>
       <rect x="64" y="16" width="96" height="20" rx="10" fill="#EEEDFE"/>
       <text x="112" y="26" text-anchor="middle" dominant-baseline="central" fill="#534AB7" font-family="'DM Sans',sans-serif" font-size="10" font-weight="700" letter-spacing="0.06em">REPRESENTATION</text>
       <text x="20" y="60" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="15" font-weight="600">Stratified Grid Sampling</text>
       <text x="20" y="82" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">A clip is divided into K = 9 temporal bins. One frame per bin is sampled and tiled into a single</text>
       <text x="20" y="98" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">grid image G<tspan font-size="10" dy="-2">(m)</tspan><tspan dy="2">, repeated M times with independent draws for complementary temporal coverage.</tspan></text>
+
+      <!-- connector 01→02 -->
       <line x1="398" y1="108" x2="398" y2="136" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
       <rect x="318" y="116" width="160" height="18" rx="5" fill="#eef1fb"/>
       <text x="398" y="125" text-anchor="middle" dominant-baseline="central" fill="#7a84a8" font-family="'DM Mono',monospace" font-size="10.5">M grid images →</text>
+
+      <!-- 02 — VLM Proposal (y=136) -->
       <rect x="0" y="136" width="796" height="108" rx="10" fill="#f0faf5" stroke="#dde3f0" stroke-width="1"/>
       <rect x="0" y="136" width="5" height="108" rx="3" fill="#0F6E56"/>
       <rect x="20" y="152" width="36" height="22" rx="5" fill="#1a1f3a"/>
@@ -493,9 +500,13 @@
       <text x="20" y="196" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="15" font-weight="600">Open-Set Anomaly Proposal via VLM</text>
       <text x="20" y="218" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">Each grid is passed to Qwen3-VL 30B with a structured prompt for free-form detection, description,</text>
       <text x="20" y="234" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">and temporal localisation. No predefined category list — the VLM reasons from first principles.</text>
+
+      <!-- connector 02→03 -->
       <line x1="398" y1="244" x2="398" y2="272" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
       <rect x="308" y="252" width="180" height="18" rx="5" fill="#eef1fb"/>
       <text x="398" y="261" text-anchor="middle" dominant-baseline="central" fill="#7a84a8" font-family="'DM Mono',monospace" font-size="10.5">M × proposals →</text>
+
+      <!-- 03 — SCC (y=272) -->
       <rect x="0" y="272" width="796" height="108" rx="10" fill="#fffaf4" stroke="#dde3f0" stroke-width="1"/>
       <rect x="0" y="272" width="5" height="108" rx="3" fill="#BA7517"/>
       <rect x="20" y="288" width="36" height="22" rx="5" fill="#1a1f3a"/>
@@ -505,40 +516,50 @@
       <text x="20" y="332" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="15" font-weight="600">Self-Consistency Consolidation (SCC)</text>
       <text x="20" y="354" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">Proposals from all M grids are consolidated by a text-only LLM. Only detections with support</text>
       <text x="20" y="370" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">σ ≥ τ across samplings are retained — genuine anomalies recur; hallucinations do not.</text>
-      <line x1="398" y1="380" x2="398" y2="410" stroke="#a0aacb" stroke-width="1.5" fill="none"/>
-      <line x1="200" y1="410" x2="596" y2="410" stroke="#a0aacb" stroke-width="1.5" fill="none"/>
-      <line x1="200" y1="410" x2="200" y2="432" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
-      <line x1="596" y1="410" x2="596" y2="432" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
-      <rect x="318" y="388" width="160" height="18" rx="5" fill="#eef1fb"/>
+
+      <!-- connector 03→04a -->
+      <line x1="398" y1="380" x2="398" y2="408" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
+      <rect x="308" y="388" width="180" height="18" rx="5" fill="#eef1fb"/>
       <text x="398" y="397" text-anchor="middle" dominant-baseline="central" fill="#7a84a8" font-family="'DM Mono',monospace" font-size="10.5">surviving proposals →</text>
-      <rect x="10" y="432" width="374" height="100" rx="10" fill="#fdf0eb" stroke="#dde3f0" stroke-width="1"/>
-      <rect x="10" y="432" width="5" height="100" rx="3" fill="#993C1D"/>
-      <rect x="26" y="447" width="36" height="20" rx="5" fill="#1a1f3a"/>
-      <text x="44" y="457" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Mono',monospace" font-size="11" font-weight="600">04a</text>
-      <rect x="70" y="447" width="90" height="20" rx="10" fill="#FAECE7"/>
-      <text x="115" y="457" text-anchor="middle" dominant-baseline="central" fill="#993C1D" font-family="'DM Sans',sans-serif" font-size="10" font-weight="700" letter-spacing="0.06em">GROUNDING</text>
-      <text x="26" y="492" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="14" font-weight="600">Grounding DINO</text>
-      <text x="26" y="512" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13">Anchors each surviving proposal to a bounding</text>
-      <text x="26" y="526" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13">box in the anomaly anchor frame.</text>
-      <rect x="412" y="432" width="374" height="100" rx="10" fill="#eaf3fd" stroke="#dde3f0" stroke-width="1"/>
-      <rect x="412" y="432" width="5" height="100" rx="3" fill="#185FA5"/>
-      <rect x="428" y="447" width="36" height="20" rx="5" fill="#1a1f3a"/>
-      <text x="446" y="457" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Mono',monospace" font-size="11" font-weight="600">04b</text>
-      <rect x="472" y="447" width="104" height="20" rx="10" fill="#E6F1FB"/>
-      <text x="524" y="457" text-anchor="middle" dominant-baseline="central" fill="#185FA5" font-family="'DM Sans',sans-serif" font-size="10" font-weight="700" letter-spacing="0.06em">PROPAGATION</text>
-      <text x="428" y="492" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="14" font-weight="600">SAM2</text>
-      <text x="428" y="512" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13">Propagates each box as a dense pixel-level mask</text>
-      <text x="428" y="526" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13">through the SCC-refined temporal window.</text>
-      <line x1="200" y1="532" x2="200" y2="562" stroke="#a0aacb" stroke-width="1.5" fill="none"/>
-      <line x1="200" y1="562" x2="398" y2="562" stroke="#a0aacb" stroke-width="1.5" fill="none"/>
-      <line x1="596" y1="532" x2="596" y2="562" stroke="#a0aacb" stroke-width="1.5" fill="none"/>
-      <line x1="596" y1="562" x2="398" y2="562" stroke="#a0aacb" stroke-width="1.5" fill="none"/>
-      <line x1="398" y1="562" x2="398" y2="582" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
-      <rect x="148" y="582" width="500" height="60" rx="10" fill="#1a1f3a" stroke="#1a1f3a" stroke-width="1"/>
-      <text x="398" y="606" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="'DM Sans',sans-serif" font-size="14" font-weight="600">Output: pixel-level anomaly masks</text>
-      <text x="398" y="628" text-anchor="middle" dominant-baseline="central" fill="#8baad4" font-family="'Crimson Pro',serif" font-size="13">Temporally consistent dense segmentation — no domain training required</text>
-      <rect x="60" y="658" width="676" height="36" rx="7" fill="none" stroke="#c5cde8" stroke-width="1" stroke-dasharray="5 3"/>
-      <text x="398" y="676" text-anchor="middle" dominant-baseline="central" fill="#7a84a8" font-family="'DM Mono',monospace" font-size="11">Fixed VLM budget: M + 1 calls per clip · 2.7× more efficient than per-frame querying</text>
+
+      <!-- 04a — Grounding DINO (y=408) -->
+      <rect x="0" y="408" width="796" height="100" rx="10" fill="#fdf0eb" stroke="#dde3f0" stroke-width="1"/>
+      <rect x="0" y="408" width="5" height="100" rx="3" fill="#993C1D"/>
+      <rect x="20" y="422" width="40" height="22" rx="5" fill="#1a1f3a"/>
+      <text x="40" y="433" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Mono',monospace" font-size="11" font-weight="600">04</text>
+      <rect x="68" y="422" width="92" height="20" rx="10" fill="#FAECE7"/>
+      <text x="114" y="432" text-anchor="middle" dominant-baseline="central" fill="#993C1D" font-family="'DM Sans',sans-serif" font-size="10" font-weight="700" letter-spacing="0.06em">GROUNDING</text>
+      <text x="20" y="466" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="15" font-weight="600">Grounding DINO</text>
+      <text x="20" y="488" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">Anchors each surviving proposal to a bounding box in the anomaly anchor frame.</text>
+      <text x="20" y="504" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">Provides precise spatial coordinates for mask propagation.</text>
+
+      <!-- connector 04a→04b -->
+      <line x1="398" y1="508" x2="398" y2="536" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
+      <rect x="308" y="516" width="180" height="18" rx="5" fill="#eef1fb"/>
+      <text x="398" y="525" text-anchor="middle" dominant-baseline="central" fill="#7a84a8" font-family="'DM Mono',monospace" font-size="10.5">bounding boxes →</text>
+
+      <!-- 04b — SAM2 (y=536) -->
+      <rect x="0" y="536" width="796" height="100" rx="10" fill="#eaf3fd" stroke="#dde3f0" stroke-width="1"/>
+      <rect x="0" y="536" width="5" height="100" rx="3" fill="#185FA5"/>
+      <rect x="20" y="550" width="40" height="22" rx="5" fill="#1a1f3a"/>
+      <text x="40" y="561" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Mono',monospace" font-size="11" font-weight="600">05</text>
+      <rect x="68" y="550" width="106" height="20" rx="10" fill="#E6F1FB"/>
+      <text x="121" y="560" text-anchor="middle" dominant-baseline="central" fill="#185FA5" font-family="'DM Sans',sans-serif" font-size="10" font-weight="700" letter-spacing="0.06em">PROPAGATION</text>
+      <text x="20" y="594" fill="#1a1f3a" font-family="'DM Sans',sans-serif" font-size="15" font-weight="600">SAM2</text>
+      <text x="20" y="616" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">Propagates each bounding box as a dense pixel-level mask through the SCC-refined temporal window,</text>
+      <text x="20" y="632" fill="#5a6282" font-family="'Crimson Pro',serif" font-size="13.5">producing temporally consistent segmentation across all anomaly frames.</text>
+
+      <!-- connector 04b→output -->
+      <line x1="398" y1="636" x2="398" y2="656" stroke="#a0aacb" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
+
+      <!-- Output box -->
+      <rect x="148" y="656" width="500" height="68" rx="10" fill="#1a1f3a"/>
+      <text x="398" y="682" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="'DM Sans',sans-serif" font-size="14" font-weight="600">Output: pixel-level anomaly masks</text>
+      <text x="398" y="708" text-anchor="middle" dominant-baseline="central" fill="#8baad4" font-family="'Crimson Pro',serif" font-size="13">Temporally consistent dense segmentation — no domain training required</text>
+
+      <!-- Budget note -->
+      <rect x="60" y="734" width="676" height="36" rx="7" fill="none" stroke="#c5cde8" stroke-width="1" stroke-dasharray="5 3"/>
+      <text x="398" y="752" text-anchor="middle" dominant-baseline="central" fill="#7a84a8" font-family="'DM Mono',monospace" font-size="11">Fixed VLM budget: M + 1 calls per clip · 2.7× more efficient than per-frame querying</text>
     </svg>
   </div>
 </section>
@@ -551,113 +572,75 @@
   <div class="divider"></div>
 
   <p style="text-align:center; margin-bottom: 28px;">
-    Each clip shows the input video alongside GridVAD's predicted pixel-level anomaly masks. Select a dataset tab, then choose a test clip below the player.
+    Each clip shows the input video alongside GridVAD's predicted pixel-level anomaly masks across both benchmarks.
   </p>
 
-  <!-- ══ DEMO SHELL ══ -->
   <div class="demo-shell">
 
-    <!-- Dataset tabs -->
-    <div class="ds-tabs" role="tablist">
-      <button class="ds-tab active" role="tab" aria-selected="true"  onclick="switchDataset('ucsd',   this)">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        UCSD Ped2
-        <span class="ds-badge">6 clips</span>
-      </button>
-      <button class="ds-tab" role="tab" aria-selected="false" onclick="switchDataset('shanghai', this)">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        ShanghaiTech Campus
-        <span class="ds-badge">Coming soon</span>
-      </button>
+    <!-- Single shared video player -->
+    <div class="video-stage">
+      <video id="main-player" controls preload="metadata" muted loop
+             oncanplay="onVideoReady()"
+             onerror="onVideoError()"></video>
+
+      <div class="video-status visible" id="status-idle">
+        <span class="status-icon">▶️</span>
+        <div class="status-title">Select a clip below to play</div>
+      </div>
+      <div class="video-status" id="status-loading">
+        <span class="status-icon" style="display:inline-block;animation:spin 1s linear infinite">⏳</span>
+        <div class="status-title">Loading video…</div>
+      </div>
+      <div class="video-status" id="status-error">
+        <span class="status-icon">⚠️</span>
+        <div class="status-title">Video not found</div>
+        <div class="status-sub">Check the file path in your GitHub Pages repo.</div>
+      </div>
+
+      <div class="clip-badge" id="main-badge" style="display:none;"></div>
     </div>
 
-    <!-- ── UCSD Ped2 panel ── -->
-    <div class="ds-panel active" id="panel-ucsd">
-
-      <!-- Main video player -->
-      <div class="video-stage">
-        <video id="ucsd-player" controls preload="metadata" muted loop
-               oncanplay="onVideoReady('ucsd')"
-               onerror="onVideoError('ucsd')"></video>
-
-        <!-- idle state -->
-        <div class="video-status visible" id="ucsd-idle">
-          <span class="status-icon">▶️</span>
-          <div class="status-title">Select a clip below to play</div>
-        </div>
-        <!-- loading state -->
-        <div class="video-status" id="ucsd-loading">
-          <span class="status-icon" style="display:inline-block;animation:spin 1s linear infinite">⏳</span>
-          <div class="status-title">Loading video…</div>
-          <div class="status-sub" id="ucsd-loading-url"></div>
-        </div>
-        <!-- error state -->
-        <div class="video-status" id="ucsd-error">
-          <span class="status-icon">⚠️</span>
-          <div class="status-title">Video not found</div>
-          <div class="status-sub" id="ucsd-error-msg">Ensure the file exists at <code>Videos/UCSD_Ped2/</code> in your GitHub repo.</div>
-        </div>
-
-        <div class="clip-badge" id="ucsd-badge"></div>
-      </div>
-
-      <!-- Clip selector strip -->
-      <div class="clip-strip">
-        <span class="clip-strip-label">Clip</span>
-        <button class="clip-btn" onclick="selectClip('ucsd', 1, this)">Test 001</button>
-        <button class="clip-btn" onclick="selectClip('ucsd', 2, this)">Test 002</button>
-        <button class="clip-btn" onclick="selectClip('ucsd', 3, this)">Test 003</button>
-        <button class="clip-btn" onclick="selectClip('ucsd', 4, this)">Test 004</button>
-        <button class="clip-btn" onclick="selectClip('ucsd', 5, this)">Test 005</button>
-        <button class="clip-btn" onclick="selectClip('ucsd', 6, this)">Test 006</button>
-      </div>
-
-      <!-- Info bar -->
-      <div class="video-info-bar">
-        <div class="info-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
-        <div class="info-text">
-          <div class="info-title">UCSD Ped2 — Qualitative Analysis &amp; Benchmarking</div>
-          <p class="info-desc">
-            GridVAD detects non-pedestrian objects (bicycles, skateboards, vehicles) as anomalies via zero-shot reasoning.
-            <strong>Visualizing Transparency:</strong> These results showcase both successful detections and
-            <em>False Negatives</em> (missed anomalies). By comparing our predicted masks against the
-            <strong>Ground Truth (GT)</strong>, we highlight the model's precision as well as its limitations.
-          </p>
-        </div>
-      </div>
+    <!-- UCSD Ped2 row -->
+    <div class="clip-strip">
+      <span class="clip-strip-label" style="color:var(--blue);min-width:96px;">CLIP</span>
+      <button class="clip-btn" id="btn-ucsd-1" onclick="selectClip('Videos/UCSD_Ped2/Test001_demo.mp4','CLIP· Test 001',this)">Test 001</button>
+      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/Test001_demo.mp4','CLIP · Test 002',this)">Test 002</button>
+      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test002_demo.mp4','CLIP · Test 003',this)">Test 003</button>
+      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/Test002_demo.mp4','CLIP · Test 004',this)">Test 004</button>
+      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test003_demo.mp4','CLIP · Test 005',this)">Test 005</button>
+      <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test004_demo.mp4','CLIP · Test 006',this)">Test 006</button>
+       <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test005_demo.mp4','CLIP · Test 007',this)">Test 007</button>
+       <button class="clip-btn" onclick="selectClip('Videos/UCSD_Ped2/Test006_demo.mp4','CLIP · Test 008',this)">Test 008</button>
     </div>
 
-    <!-- ── ShanghaiTech panel ── -->
-    <div class="ds-panel" id="panel-shanghai">
-      <div class="video-stage">
-        <div class="coming-soon-overlay">
-          <span class="cs-icon">🏗️</span>
-          <div class="cs-title">ShanghaiTech demos coming soon</div>
-          <div class="cs-sub">Videos will appear here once uploaded</div>
-        </div>
+    <!-- ShanghaiTech row -->
+   <!-- <div class="clip-strip" style="border-top: 1px dashed var(--border); padding-top:14px;">
+      <span class="clip-strip-label" style="color:var(--amber);min-width:96px;">ShanghaiTech</span>
+      <!-- Uncomment and update filenames once you have the videos:
+      <button class="clip-btn" onclick="selectClip('Videos/ShanghaiTech/SH001_demo.mp4','SH · Scene 001',this)">Scene 001</button>
+      -->
+      <span style="font-family:'DM Mono',monospace;font-size:0.76rem;color:#a0aacb;padding:6px 2px;">Coming soon — clips will appear here</span>
+    </div>-->
+
+    <!-- Info bar -->
+    <div class="video-info-bar">
+      <div class="info-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       </div>
-      <div class="clip-strip" style="opacity:0.45; pointer-events:none;">
-        <span class="clip-strip-label">Clip</span>
-        <button class="clip-btn">— —</button>
-      </div>
-      <div class="video-info-bar">
-        <div class="info-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
-        <div class="info-text">
-          <div class="info-title">ShanghaiTech Campus — Anomalous test clips</div>
-          <p class="info-desc">Qualitative results on the ShanghaiTech benchmark will be added here. This dataset contains diverse scenes and anomaly types across multiple campus cameras.</p>
-        </div>
+      <div class="info-text">
+        <div class="info-title">Qualitative Analysis &amp; Benchmarking</div>
+        <p class="info-desc">
+          GridVAD detects non-pedestrian objects and unusual behaviours via zero-shot reasoning.
+          <strong>Visualizing Transparency:</strong> These results showcase both successful detections and
+          <em>False Negatives</em> (missed anomalies). By comparing predicted masks against the
+          <strong>Ground Truth (GT)</strong>, we highlight the model's precision as well as its limitations.
+        </p>
       </div>
     </div>
 
   </div><!-- /demo-shell -->
-
-
-
 </section>
+
 
 <!-- ══ QUANTITATIVE RESULTS ══ -->
 <hr class="section-hr">
@@ -775,81 +758,50 @@
   .status-icon  { font-size: 2rem; }
   .status-title { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; color: #8baad4; }
   .status-sub   { font-family: 'DM Mono', monospace; font-size: 0.74rem; color: #4a5278; line-height: 1.6; max-width: 460px; }
-  .status-sub code { font-family: 'DM Mono', monospace; background: rgba(255,255,255,0.07); padding: 2px 6px; border-radius: 4px; }
 </style>
 <script>
-  // Base path — videos live at Videos/UCSD_Ped2/ relative to index.html on GitHub Pages
-  const BASE = 'Videos/UCSD_Ped2/';
+  let activeBtn = null;
 
-  const CLIPS = {
-    ucsd: {
-      1: 'Test001_demo.mp4',
-      2: 'Test002_demo.mp4',
-      3: 'Test003_demo.mp4',
-      4: 'Test004_demo.mp4',
-      5: 'Test005_demo.mp4',
-      6: 'Test006_demo.mp4',
-    }
-    // Add ShanghaiTech entries here when ready:
-    // shanghai: { 1: 'SH_Test001_demo.mp4', ... }
-  };
-
-  function showState(ds, state) {
-    ['idle', 'loading', 'error'].forEach(s => {
-      const el = document.getElementById(ds + '-' + s);
-      if (el) el.classList.toggle('visible', s === state);
+  function showState(state) {
+    ['idle','loading','error'].forEach(s => {
+      document.getElementById('status-' + s).classList.toggle('visible', s === state);
     });
-    const vid   = document.getElementById(ds + '-player');
-    const badge = document.getElementById(ds + '-badge');
-    const isReady = (state === 'ready');
-    if (vid)   vid.style.display   = isReady ? 'block' : 'none';
-    if (badge) badge.style.display = isReady ? 'block' : 'none';
+    const vid   = document.getElementById('main-player');
+    const badge = document.getElementById('main-badge');
+    const ready = state === 'ready';
+    vid.style.display   = ready ? 'block' : 'none';
+    badge.style.display = ready ? 'block' : 'none';
   }
 
-  function onVideoReady(ds) {
-    showState(ds, 'ready');
-    document.getElementById(ds + '-player').play().catch(() => {});
+  function onVideoReady() {
+    showState('ready');
+    document.getElementById('main-player').play().catch(() => {});
   }
 
-  function onVideoError(ds) {
-    showState(ds, 'error');
+  function onVideoError() {
+    showState('error');
   }
 
-  function selectClip(ds, idx, btnEl) {
+  function selectClip(src, label, btnEl) {
     // Update active button
-    btnEl.closest('.clip-strip').querySelectorAll('.clip-btn')
-         .forEach(b => b.classList.remove('active'));
+    if (activeBtn) activeBtn.classList.remove('active');
+    activeBtn = btnEl;
     btnEl.classList.add('active');
 
-    // Show loading state
-    showState(ds, 'loading');
+    // Update badge
+    document.getElementById('main-badge').textContent = label;
 
-    // Set video source
-    const url = BASE + CLIPS[ds][idx];
-    const vid = document.getElementById(ds + '-player');
-    vid.src = url;
+    // Load video
+    showState('loading');
+    const vid = document.getElementById('main-player');
+    vid.src = src;
     vid.load();
-
-    // Update badge text
-    const badge = document.getElementById(ds + '-badge');
-    if (badge) badge.textContent = 'Test ' + String(idx).padStart(3, '0');
   }
 
-  function switchDataset(ds, tabEl) {
-    document.querySelectorAll('.ds-tab').forEach(t => {
-      t.classList.remove('active');
-      t.setAttribute('aria-selected', 'false');
-    });
-    tabEl.classList.add('active');
-    tabEl.setAttribute('aria-selected', 'true');
-    document.querySelectorAll('.ds-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + ds).classList.add('active');
-  }
-
-  // Auto-load Test 001 on page load
+  // Auto-load UCSD Test 001 on page load
   window.addEventListener('DOMContentLoaded', () => {
-    const firstBtn = document.querySelector('#panel-ucsd .clip-btn');
-    if (firstBtn) selectClip('ucsd', 1, firstBtn);
+    const firstBtn = document.getElementById('btn-ucsd-1');
+    if (firstBtn) selectClip('Videos/UCSD_Ped2/Test001_demo.mp4', 'UCSD · Test 001', firstBtn);
   });
 
   function copyBib() {
